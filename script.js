@@ -63,6 +63,7 @@ window.addEventListener('load', () => {
     }
     colors.push(document.getElementById('rgb-input-text'));
 
+    let customActive = false;
     for (var i = 0; i < colors.length; i++) {
         let color = colors[i];
         color.addEventListener('click', () => {
@@ -74,9 +75,11 @@ window.addEventListener('load', () => {
             //add new border to selected color div
             color.style.border = '2px solid red';
             //change the line color
-            if (color.id != 'rgb-input-text')
+            if (color.id != 'rgb-input-text') {
+                customActive = false;
                 ctx.strokeStyle = color.style.backgroundColor;
-            else {
+            } else {
+                customActive = true;
                 ctx.strokeStyle = document.getElementById('rgb-input').value;
             }
         });
@@ -87,5 +90,10 @@ window.addEventListener('load', () => {
         link.download = 'drawing.png';
         link.href = canvas.toDataURL();
         link.click();
+    });
+    document.getElementById('rgb-input').addEventListener('change', () => {
+        if (customActive) {
+            ctx.strokeStyle = document.getElementById('rgb-input').value;
+        }
     });
 });
