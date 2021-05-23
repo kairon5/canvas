@@ -1,0 +1,52 @@
+* {
+    font-family: 'Avenir.otf', sans-serif;
+    user-select: none;
+}
+#tools {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-bottom: 2px solid black;
+    display: inline-block;
+    width: 100%;
+    height: 5%;
+}
+.color {
+    position: relative;
+    top: 10%;
+    padding: 0.2% white;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+#download {
+    font-size: x-large;
+}
+#clear {
+    font-size: large;
+}
+#rgb-input-text {
+    font-size: larger;
+}
+.tool {
+    position: relative;
+    top: -10%;
+    display: inline-block;
+}
+canvas {
+    display: block;
+
+    position: absolute;
+    left: 0%;
+    top: 5%;
+}
+
+@media (max-width: 900px) {
+    #tools {
+        height: 10%;
+    }
+    canvas {
+        top: 10%;
+    }
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Canvas</title>
+        <link rel="stylesheet" href="styling.css" />
+    </head>
+    <body>
+        <div id="tools">
+            <div class="tool">ㅤㅤPen size</div>
+            <input
+                type="range"
+                max="100"
+                min="2"
+                value="10"
+                id="line-size"
+                class="atool"
+            />
+            <button id="clear" class="tool">Clear All</button>
+
+            <div class="color" style="background-color: blue"></div>
+            <div class="color" style="background-color: red"></div>
+            <div class="color" style="background-color: green"></div>
+            <div class="color" style="background-color: greenyellow"></div>
+            <div class="color" style="background-color: yellow"></div>
+            <div class="color" style="background-color: purple"></div>
+            <div class="color" style="background-color: pink"></div>
+            <div class="color" style="background-color: brown"></div>
+            <div class="color" style="background-color: orange"></div>
+            <div
+                class="color"
+                style="background-color: black; border: 2px solid red"
+            ></div>
+            <div id="rgb-input-text" class="tool">Custom</div>
+            <input type="color" id="rgb-input" class="tool" />
+            <button id="download" class="tool">↓</button>
+        </div>
+        <canvas id="canvas"></canvas>
+        <script src="script.js"></script>
+    </body>
+</html>
