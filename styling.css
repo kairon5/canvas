@@ -29,6 +29,9 @@
 #rgb-input-text {
     font-size: larger;
 }
+#eraser {
+    top: 10%;
+}
 .tool {
     position: relative;
     top: -10%;
@@ -48,5 +51,12 @@ canvas {
     }
     canvas {
         top: 10%;
+    }
+    #eraser {
+        top: 0%;
+    }
+    .color {
+        width: 25px;
+        height: 25px;
     }
 }

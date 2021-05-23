@@ -6,9 +6,7 @@ window.addEventListener('load', () => {
     const ctx = canvas.getContext('2d');
 
     let md = false; //md == mousedown;
-
     let sizeSlider = document.getElementById('line-size'); //fetch the pen size slider
-
     let difference = 0.05; //basically the size of the "tools" div.0.05 == 5% of screen height
 
     function resize() {
@@ -27,7 +25,6 @@ window.addEventListener('load', () => {
         }
         ctx.lineWidth = sizeSlider.value;
         ctx.lineCap = 'round';
-
         ctx.lineTo(
             event.clientX,
             event.clientY -
@@ -50,9 +47,21 @@ window.addEventListener('load', () => {
             draw(e);
         }
     });
-
     document.getElementById('clear').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+    //download drawing
+    document.getElementById('download').addEventListener('click', () => {
+        var link = document.createElement('a');
+        link.download = 'drawing.png';
+        link.href = canvas.toDataURL();
+        //download the drawing
+        link.click();
+    });
+    document.getElementById('rgb-input').addEventListener('change', () => {
+        if (customActive) {
+            ctx.strokeStyle = document.getElementById('rgb-input').value;
+        }
     });
 
     let colorList = document.getElementsByClassName('color');
@@ -61,6 +70,7 @@ window.addEventListener('load', () => {
     for (var i = 0; i < colorList.length; i++) {
         colors.push(colorList[i]);
     }
+    colors.push(document.getElementById('eraser'));
     colors.push(document.getElementById('rgb-input-text'));
 
     let customActive = false;
@@ -73,27 +83,18 @@ window.addEventListener('load', () => {
                 curcolor.style.border = 'none';
             }
             //add new border to selected color div
-            color.style.border = '2px solid red';
+            color.style.border = '2px solid black';
             //change the line color
-            if (color.id != 'rgb-input-text') {
+            if (color.id != 'rgb-input-text' && color.id != 'eraser') {
                 customActive = false;
                 ctx.strokeStyle = color.style.backgroundColor;
-            } else {
+            } else if (color.id == 'rgb-input-text') {
                 customActive = true;
+                //since the display is set to inline-block
                 ctx.strokeStyle = document.getElementById('rgb-input').value;
+            } else if (color.id == 'eraser') {
+                ctx.strokeStyle = 'white';
             }
         });
     }
-    //download drawing
-    document.getElementById('download').addEventListener('click', () => {
-        var link = document.createElement('a');
-        link.download = 'drawing.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    });
-    document.getElementById('rgb-input').addEventListener('change', () => {
-        if (customActive) {
-            ctx.strokeStyle = document.getElementById('rgb-input').value;
-        }
-    });
 });
