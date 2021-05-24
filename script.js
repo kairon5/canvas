@@ -1,13 +1,11 @@
-var l = (text) => {
-    console.log(text);
-}; //easier to output things
 window.addEventListener('load', () => {
     const canvas = document.querySelector('#canvas');
     const ctx = canvas.getContext('2d');
 
     let md = false; //md == mousedown;
     let sizeSlider = document.getElementById('line-size'); //fetch the pen size slider
-    let difference = 0.05; //basically the size of the "tools" div.0.05 == 5% of screen height
+    let difference = 0.025; //basically the size of the "tools" div.0.05 == 5% of screen height
+    let paths = [];
 
     function resize() {
         canvas.height = window.innerHeight * (1 - difference);
@@ -25,13 +23,16 @@ window.addEventListener('load', () => {
         }
         ctx.lineWidth = sizeSlider.value;
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.lineTo(
             event.clientX,
-            event.clientY -
-                window.innerHeight *
-                    difference /*moving canvas down breaks drawing*/
+            event.clientY - window.innerWidth * difference
         );
         ctx.stroke();
+    }
+    function clear() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        paths = [];
     }
 
     canvas.addEventListener('mousedown', (e) => {
@@ -41,14 +42,20 @@ window.addEventListener('load', () => {
     canvas.addEventListener('mouseup', () => {
         md = false;
         ctx.beginPath(); //allow single clicks without mouse movement
+
+        paths.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
     });
     canvas.addEventListener('mousemove', (e) => {
         if (md) {
             draw(e);
         }
     });
+    canvas.addEventListener('mouseout', () => {
+        md = false;
+        ctx.beginPath();
+    });
     document.getElementById('clear').addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        clear();
     });
     //download drawing
     document.getElementById('download').addEventListener('click', () => {
@@ -62,6 +69,9 @@ window.addEventListener('load', () => {
         if (customActive) {
             ctx.strokeStyle = document.getElementById('rgb-input').value;
         }
+    });
+    document.getElementById('undo').addEventListener('click', () => {
+        undo();
     });
 
     let colorList = document.getElementsByClassName('color');
@@ -90,11 +100,30 @@ window.addEventListener('load', () => {
                 ctx.strokeStyle = color.style.backgroundColor;
             } else if (color.id == 'rgb-input-text') {
                 customActive = true;
-                //since the display is set to inline-block
                 ctx.strokeStyle = document.getElementById('rgb-input').value;
             } else if (color.id == 'eraser') {
                 ctx.strokeStyle = 'white';
             }
+        });
+    }
+    function undo() {
+        if (paths.length <= 1) {
+            clear();
+        } else {
+            paths.pop();
+            ctx.putImageData(paths[paths.length - 1], 0, 0);
+        }
+    }
+
+    //some button styling
+    let buttons = document.getElementsByTagName('button');
+    for (var i = 0; i < buttons.length; i++) {
+        let cur = buttons[i];
+        cur.addEventListener('mouseover', () => {
+            cur.style.backgroundColor = 'rgb(200, 30, 30)';
+        });
+        cur.addEventListener('mouseout', () => {
+            cur.style.backgroundColor = 'white';
         });
     }
 });

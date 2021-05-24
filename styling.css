@@ -20,8 +20,15 @@
     height: 30px;
     border-radius: 50%;
 }
+button {
+    border: 2px solid black;
+    border-radius: 5px;
+}
 #download {
     font-size: x-large;
+}
+#undo {
+    font-size: large;
 }
 #clear {
     font-size: large;

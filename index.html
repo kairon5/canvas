@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="styling.css" />
     </head>
     <body>
+        <canvas id="canvas"></canvas>
+        <script src="script.js"></script>
         <div id="tools">
             <div class="tool">ㅤㅤPen size</div>
             <input
@@ -19,6 +21,7 @@
                 class="atool"
             />
             <button id="clear" class="tool">Clear All</button>
+            <button id="undo" class="tool">Undo</button>
 
             <div class="color" style="background-color: blue"></div>
             <div class="color" style="background-color: red"></div>
@@ -44,7 +47,5 @@
             />
             <button id="download" class="tool">↓</button>
         </div>
-        <canvas id="canvas"></canvas>
-        <script src="script.js"></script>
     </body>
 </html>
